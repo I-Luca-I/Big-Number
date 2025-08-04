@@ -10,8 +10,12 @@ private:
     
     big_number();
 public:
-    static big_number decimal(std::string);
-    static big_number binary(std::string);
+    static big_number decimal(std::string number);
+    static big_number binary(std::string number);
+    int size();
+    void resize_integer(int new_size);
+    void resize_fraction(int new_size);
+    void shrink_to_fit();
     std::string to_decimal_string();
     std::string to_binary_string();
 

@@ -3,7 +3,7 @@
 
 TEST_CASE("you can initialize a bit_deque from a std::string") {
     bit_deque b;
-    REQUIRE(b.to_string() == "0");
+    REQUIRE(b.to_string() == "");
 
     b = bit_deque("1");
     REQUIRE(b.to_string() == "1");

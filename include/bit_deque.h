@@ -10,7 +10,7 @@ private:
     int spare_bits_back;
     int spare_bits_front;
 public:
-    bit_deque(std::string bits="0");
+    bit_deque(std::string bits="");
     int size();
     bool get(int index);
     void set(int index, bool value);

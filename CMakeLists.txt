@@ -9,7 +9,20 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(BigNumber srs/main.cpp srs/bit_deque.cpp)
-add_executable(BigNumberTests tests/test_bit_deque.cpp srs/bit_deque.cpp)
+add_executable(
+    BigNumber 
+    srs/main.cpp 
+    srs/bit_deque.cpp
+    srs/big_number/big_number.cpp
+)
+
+add_executable(
+    BigNumberTests
+    srs/bit_deque.cpp
+    srs/big_number/big_number.cpp
+
+    tests/test_bit_deque.cpp 
+    tests/big_number/test_big_number.cpp
+)
 
 target_link_libraries(BigNumberTests PRIVATE Catch2::Catch2WithMain)
