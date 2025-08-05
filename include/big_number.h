@@ -16,6 +16,7 @@ public:
     void resize_integer(int new_size);
     void resize_fraction(int new_size);
     void shrink_to_fit();
+    static void equalize_sizes(big_number& bg1, big_number& bg2);
     std::string to_decimal_string();
     std::string to_binary_string();
 

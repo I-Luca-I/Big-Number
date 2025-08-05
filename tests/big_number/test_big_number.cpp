@@ -82,4 +82,20 @@ TEST_CASE("a big_number can be resized") {
         REQUIRE(b.to_binary_string() == "10");
         REQUIRE(b.size() == 2);
     }
+
+    SECTION("resizing two objects to have the same size") {
+        big_number b1 = big_number::binary("-1001.01");
+        big_number b2 = big_number::binary("10.01110");
+        big_number::equalize_sizes(b1, b2);
+        REQUIRE(b1.to_binary_string() == "-1001.01000");
+        REQUIRE(b2.to_binary_string() == "0010.01110");
+        REQUIRE(b1.size() == b2.size());
+
+        b1 = big_number::binary("-1001.01");
+        b2 = big_number::binary("-1110");
+        big_number::equalize_sizes(b1, b2);
+        REQUIRE(b1.to_binary_string() == "-1001.01");
+        REQUIRE(b2.to_binary_string() == "-1110.00");
+        REQUIRE(b1.size() == b2.size());
+    }
 }

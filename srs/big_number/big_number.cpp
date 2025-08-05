@@ -76,6 +76,14 @@ void big_number::shrink_to_fit() {
     }
 }
 
+// Complexity: Linear in abs(number_1.integer_part_size - number_2.integer_part_size) + abs(number_1.fractional_part_size - number_2.fractional_part_size)
+void big_number::equalize_sizes(big_number& number_1, big_number& number_2) {
+    number_1.resize_integer(std::max(number_1.integer_part_size, number_2.integer_part_size));
+    number_2.resize_integer(std::max(number_1.integer_part_size, number_2.integer_part_size));
+    number_1.resize_fraction(std::max(number_1.fractional_part_size, number_2.fractional_part_size));
+    number_2.resize_fraction(std::max(number_1.fractional_part_size, number_2.fractional_part_size));
+}
+
 // std::string big_number::to_decimal_string() {}
 
 // Complexity: Linear in this.size()
