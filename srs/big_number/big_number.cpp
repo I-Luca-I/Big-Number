@@ -65,7 +65,7 @@ void big_number::resize_fraction(int new_size) {
 
 // Complexity: Linear in this.size()
 void big_number::shrink_to_fit() {
-    while(this->data.get(0) == 0 and this->integer_part_size > 0) {
+    while(this->data.get(0) == 0 and this->integer_part_size > 1) {
         this->data.pop_front();
         this->integer_part_size--;
     }

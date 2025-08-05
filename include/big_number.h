@@ -20,14 +20,21 @@ public:
     std::string to_decimal_string();
     std::string to_binary_string();
 
-    // Assignment
-    // big_number operator=(big_number other);
+    // Assignment Operators
+    big_number operator+=(big_number other);
+    big_number operator-=(big_number other);
 
-    // Binary Arithmetic
+    // Binary Arithmetic Operators
     big_number operator+(big_number other);
     big_number operator-(big_number other);
 
-    // Relational
+    // Unary Arithmetic Operators
+    big_number operator+();
+    big_number operator-();
+    big_number operator++();
+    big_number operator--();
+
+    // Relational Operators
     bool operator>(big_number other);
     bool operator<(big_number other);
     bool operator==(big_number other);

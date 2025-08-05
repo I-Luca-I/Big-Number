@@ -74,8 +74,8 @@ TEST_CASE("a big_number can be resized") {
 
         b = big_number::binary("0000.0010");
         b.shrink_to_fit();
-        REQUIRE(b.to_binary_string() == ".001");
-        REQUIRE(b.size() == 3);
+        REQUIRE(b.to_binary_string() == "0.001");
+        REQUIRE(b.size() == 4);
 
         b = big_number::binary("0010.0000");
         b.shrink_to_fit();
