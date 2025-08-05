@@ -21,8 +21,8 @@ public:
     std::string to_binary_string();
 
     // Assignment Operators
-    big_number operator+=(big_number other);
-    big_number operator-=(big_number other);
+    big_number& operator+=(big_number other);
+    big_number& operator-=(big_number other);
 
     // Binary Arithmetic Operators
     big_number operator+(big_number other);
@@ -31,8 +31,10 @@ public:
     // Unary Arithmetic Operators
     big_number operator+();
     big_number operator-();
-    big_number operator++();
-    big_number operator--();
+    big_number& operator++();
+    big_number& operator--();
+    big_number operator++(int);
+    big_number operator--(int);
 
     // Relational Operators
     bool operator>(big_number other);
@@ -41,4 +43,12 @@ public:
     bool operator!=(big_number other);
     bool operator>=(big_number other);
     bool operator<=(big_number other);
+
+    // Bitwise Operators
+    big_number operator&(big_number other);
+    big_number operator|(big_number other);
+    big_number operator^(big_number other);
+    big_number operator~();
+    big_number operator<<(int shift_count);
+    big_number operator>>(int shift_count);
 };

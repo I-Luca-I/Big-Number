@@ -14,6 +14,7 @@ add_executable(
     srs/main.cpp 
     srs/bit_deque.cpp
     srs/big_number/big_number.cpp
+    srs/big_number/bitwise_operators.cpp
     srs/big_number/relational_operators.cpp
 )
 
@@ -21,10 +22,12 @@ add_executable(
     BigNumberTests
     srs/bit_deque.cpp
     srs/big_number/big_number.cpp
+    srs/big_number/bitwise_operators.cpp
     srs/big_number/relational_operators.cpp
 
     tests/test_bit_deque.cpp 
     tests/big_number/test_big_number.cpp
+    tests/big_number/test_bitwise_operators.cpp
     tests/big_number/test_relational_operators.cpp
 )
 
