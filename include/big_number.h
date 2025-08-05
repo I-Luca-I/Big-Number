@@ -13,8 +13,8 @@ public:
     static big_number decimal(std::string number);
     static big_number binary(std::string number);
     int size();
-    void resize_integer(int new_size);
-    void resize_fraction(int new_size);
+    void resize_integer(unsigned int new_size);
+    void resize_fraction(unsigned int new_size);
     void shrink_to_fit();
     static void equalize_sizes(big_number& bg1, big_number& bg2);
     std::string to_decimal_string();
@@ -49,6 +49,6 @@ public:
     big_number operator|(big_number other);
     big_number operator^(big_number other);
     big_number operator~();
-    big_number operator<<(int shift_count);
-    big_number operator>>(int shift_count);
+    big_number operator<<(unsigned int shift_count);
+    big_number operator>>(unsigned int shift_count);
 };

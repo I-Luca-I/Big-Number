@@ -17,7 +17,7 @@ big_number big_number::binary(std::string number) {
 
     for (int i=0; i<number.length(); i++) {
         if (!(number[i] == '0' or number[i] == '1' or (number[i] == '-' and i==0) or (number[i] == '.' and !fraction))) 
-            throw std::logic_error("The binary number \"" + number + "\" is malformed");
+            throw std::invalid_argument("the binary number \"" + number + "\" is malformed");
 
         if (number[i] == '-') b.negative = true;
         else if (number[i] == '.') fraction = true;
@@ -36,8 +36,7 @@ int big_number::size() {
 }
 
 // Complexity: Linear in abs(new_size - this->integer_part_size)
-void big_number::resize_integer(int new_size) {
-    if (new_size < 0) throw std::invalid_argument("new_size can't be < 0");
+void big_number::resize_integer(unsigned int new_size) {
     while(this->integer_part_size < new_size) {
         this->data.push_front(0);
         this->integer_part_size++;
@@ -50,8 +49,7 @@ void big_number::resize_integer(int new_size) {
 }
 
 // Complexity: Linear in abs(new_size - this->fractional_part_size)
-void big_number::resize_fraction(int new_size) {
-    if (new_size < 0) throw std::invalid_argument("new_size can't be < 0");
+void big_number::resize_fraction(unsigned int new_size) {
     while(this->fractional_part_size < new_size) {
         this->data.push_back(0);
         this->fractional_part_size++;

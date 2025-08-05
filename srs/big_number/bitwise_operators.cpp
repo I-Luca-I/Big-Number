@@ -53,9 +53,7 @@ big_number big_number::operator~() {
 }
 
 // Complexity: Linear in size()
-big_number big_number::operator<<(int shift_count) {
-    if (shift_count < 0) throw std::out_of_range("left shift count is negative");
-
+big_number big_number::operator<<(unsigned int shift_count) {
     big_number b = *this;
     b.integer_part_size += shift_count;
 
@@ -74,9 +72,7 @@ big_number big_number::operator<<(int shift_count) {
 }
 
 // Complexity: Linear in size()
-big_number big_number::operator>>(int shift_count) {
-    if (shift_count < 0) throw std::out_of_range("right shift count is negative");
-
+big_number big_number::operator>>(unsigned int shift_count) {
     big_number b = *this;
     b.fractional_part_size += shift_count;
 

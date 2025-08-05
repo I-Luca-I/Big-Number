@@ -7,7 +7,7 @@ bit_deque::bit_deque(std::string bits) {
     spare_bits_front = DATA_SIZE-1;
     data.push_back(0);
     for (int i=0; i<bits.length(); i++) {
-        if (bits[i] != '0' and bits[i] != '1') throw std::logic_error("Content of bit deque can only be comprised of 1s and 0s");
+        if (bits[i] != '0' and bits[i] != '1') throw std::invalid_argument("the argument \"" + bits + "\" is malformed (contains non 1s or 0s)");
         push_back(bits[i]-'0');
     }
 }
@@ -19,7 +19,7 @@ int bit_deque::size() {
 
 // Complexity: Constant
 bool bit_deque::get(int index) {
-    if (index >= size() or index < 0) throw std::out_of_range("Index " + std::to_string(index) + " is out of bounds for deque of size " + std::to_string(size()));
+    if (index >= size() or index < 0) throw std::out_of_range("index " + std::to_string(index) + " is out of bounds for deque of size " + std::to_string(size()));
     
     index += spare_bits_front;
     int byte_index = index/DATA_SIZE;
@@ -29,7 +29,7 @@ bool bit_deque::get(int index) {
 
 // Complexity: Constant
 void bit_deque::set(int index, bool value) {
-    if (index >= size() or index < 0) throw std::out_of_range("Index " + std::to_string(index) + " is out of bounds for deque of size " + std::to_string(size()));
+    if (index >= size() or index < 0) throw std::out_of_range("index " + std::to_string(index) + " is out of bounds for deque of size " + std::to_string(size()));
 
     index += spare_bits_front;
     int byte_index = index/DATA_SIZE;
@@ -64,7 +64,7 @@ void bit_deque::push_front(bool value) {
 
 // Complexity: Constant
 void bit_deque::pop_back() {
-    if (size() == 0) throw std::logic_error("Can't pop from deque of size 0");
+    if (size() == 0) throw std::out_of_range("can't pop from deque of size 0");
 
     if (spare_bits_back == DATA_SIZE-1) {
         data.pop_back();
@@ -76,7 +76,7 @@ void bit_deque::pop_back() {
 
 // Complexity: Constant
 void bit_deque::pop_front() {
-    if (size() == 0) throw std::logic_error("Can't pop from deque of size 0");
+    if (size() == 0) throw std::out_of_range("can't pop from deque of size 0");
 
     if (spare_bits_front == DATA_SIZE-1) {
         data.pop_front();
