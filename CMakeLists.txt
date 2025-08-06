@@ -14,21 +14,30 @@ add_executable(
     srs/main.cpp 
     srs/bit_deque.cpp
     srs/big_number/big_number.cpp
-    srs/big_number/bitwise_operators.cpp
+    srs/big_number/assignment_operators.cpp
+    srs/big_number/binary_arithmetic_operators.cpp
+    srs/big_number/unary_arithmetic_operators.cpp
     srs/big_number/relational_operators.cpp
+    srs/big_number/bitwise_operators.cpp
 )
 
 add_executable(
     BigNumberTests
     srs/bit_deque.cpp
     srs/big_number/big_number.cpp
-    srs/big_number/bitwise_operators.cpp
+    srs/big_number/assignment_operators.cpp
+    srs/big_number/binary_arithmetic_operators.cpp
+    srs/big_number/unary_arithmetic_operators.cpp
     srs/big_number/relational_operators.cpp
+    srs/big_number/bitwise_operators.cpp
 
     tests/test_bit_deque.cpp 
     tests/big_number/test_big_number.cpp
-    tests/big_number/test_bitwise_operators.cpp
+    tests/big_number/test_assignment_operators.cpp
+    tests/big_number/test_binary_arithmetic_operators.cpp
+    tests/big_number/test_unary_arithmetic_operators.cpp
     tests/big_number/test_relational_operators.cpp
+    tests/big_number/test_bitwise_operators.cpp
 )
 
 target_link_libraries(BigNumberTests PRIVATE Catch2::Catch2WithMain)
