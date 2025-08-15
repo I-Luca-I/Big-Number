@@ -40,3 +40,41 @@ TEST_CASE("two big_numbers can be subtracted") {
     sum = big_number::binary("101") - big_number::binary("1010"); sum.shrink_to_fit();
     REQUIRE(sum.to_binary_string() == "-101");
 }
+
+TEST_CASE("two big_numbers can be multiplied") {
+    big_number product = big_number::binary("0") * big_number::binary("0"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "0");
+
+    product = big_number::binary("-1001") * big_number::binary("0"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-0");
+
+    product = big_number::binary("-1001.001") * big_number::binary("0"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-0");
+
+    product = big_number::binary("-1001") * big_number::binary("1"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-1001");
+
+    product = big_number::binary("-1001.001") * big_number::binary("1"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-1001.001");
+
+    product = big_number::binary("-1001") * big_number::binary("10"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-10010");
+
+    product = big_number::binary("-1001") * big_number::binary("100"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-100100");
+
+    product = big_number::binary("-1001.001") * big_number::binary("10"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-10010.01");
+
+    product = big_number::binary("-1001.001") * big_number::binary("100"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-100100.1");
+
+    product = big_number::binary("-1001") * big_number::binary("101"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "-101101");
+
+    product = big_number::binary("-1001") * big_number::binary("-101"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "101101");
+
+    product = big_number::binary("10011.0101") * big_number::binary("11.01"); product.shrink_to_fit();
+    REQUIRE(product.to_binary_string() == "111110.110001");
+}

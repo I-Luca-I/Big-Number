@@ -2,12 +2,13 @@
 
 // Complexity: Linear in size()
 bool big_number::operator>(big_number other) {
-    if (*this == other) return false;
-    if (this->negative != other.negative) return other.negative;
+    std::pair<big_number, big_number> terms = {*this, other};
+    if (terms.first == terms.second) return false;
+    if (terms.first.negative != terms.second.negative) return terms.second.negative;
 
-    big_number::equalize_sizes(*this, other);
-    for (int i=0; i<this->size(); i++) {
-        if (this->data.get(i) != other.data.get(i)) return (this->negative) ? !this->data.get(i) : this->data.get(i);
+    big_number::equalize_sizes(terms.first, terms.second);
+    for (int i=0; i<terms.first.size(); i++) {
+        if (terms.first.data.get(i) != terms.second.data.get(i)) return (terms.first.negative) ? !terms.first.data.get(i) : terms.first.data.get(i);
     }
     return false;
 }
@@ -19,15 +20,16 @@ bool big_number::operator<(big_number other) {
 
 // Complexity: Linear in size()
 bool big_number::operator==(big_number other) {
-    this->shrink_to_fit();
-    other.shrink_to_fit();
-    big_number::equalize_sizes(*this, other);
+    std::pair<big_number, big_number> terms = {*this, other};
+    terms.first.shrink_to_fit();
+    terms.second.shrink_to_fit();
+    big_number::equalize_sizes(terms.first, terms.second);
 
-    if (this->data.get(0) == 0 and this->size() == 1 and other.data.get(0) == 0 and other.size() == 1) return true;
-    if (this->negative != other.negative) return false;
+    if (terms.first.data.get(0) == 0 and terms.first.size() == 1 and terms.second.data.get(0) == 0 and terms.second.size() == 1) return true;
+    if (terms.first.negative != terms.second.negative) return false;
 
-    for (int i=0; i<this->size(); i++) {
-        if (this->data.get(i) != other.data.get(i)) return false;
+    for (int i=0; i<terms.first.size(); i++) {
+        if (terms.first.data.get(i) != terms.second.data.get(i)) return false;
     }
     return true;
 }

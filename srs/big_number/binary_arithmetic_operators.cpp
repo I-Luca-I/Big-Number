@@ -1,5 +1,6 @@
 #include "../../include/big_number.h"
 
+// Complexity: Linear in size()
 big_number big_number::operator+(big_number other) {
     std::pair<big_number, big_number> terms = {*this, other};
     big_number sum;
@@ -45,6 +46,39 @@ big_number big_number::operator+(big_number other) {
     return sum;
 }
 
+// Complexity: Linear in size()
 big_number big_number::operator-(big_number other) {
     return *this + (-other);
+}
+
+// Complexity: Exponential in size()
+big_number big_number::operator*(big_number other) {
+    std::pair<big_number, big_number> terms = {*this, other};
+    big_number product = big_number::binary("0");
+
+    std::pair<int, int> terms_ones = {0, 0};
+    for (int i=0; i<terms.first.size(); i++) {
+        terms_ones.first += terms.first.data.get(i);
+    }
+    for (int i=0; i<terms.second.size(); i++) {
+        terms_ones.second += terms.second.data.get(i);
+    }
+    if (terms_ones.second > terms_ones.first) terms = {terms.second, terms.first};
+
+    terms.first.shrink_to_fit();
+    terms.second.shrink_to_fit();
+    big_number::equalize_sizes(terms.first, product);
+
+    product.negative = terms.first.negative xor terms.second.negative;
+    terms.first.negative = product.negative;
+    terms.second.negative = product.negative;
+
+    for (int i=terms.second.size()-1; i>=0; i--) {
+        if (terms.second.data.get(i)) product += terms.first << (terms.second.size() - 1 - i);
+    }
+
+    product.integer_part_size = product.size() - terms.first.fractional_part_size - terms.second.fractional_part_size;
+    product.fractional_part_size = terms.first.fractional_part_size + terms.second.fractional_part_size;
+
+    return product;
 }

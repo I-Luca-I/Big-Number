@@ -23,10 +23,12 @@ public:
     // Assignment Operators
     big_number& operator+=(big_number other);
     big_number& operator-=(big_number other);
+    big_number& operator*=(big_number other);
 
     // Binary Arithmetic Operators
     big_number operator+(big_number other);
     big_number operator-(big_number other);
+    big_number operator*(big_number other);
 
     // Unary Arithmetic Operators
     big_number operator+();
