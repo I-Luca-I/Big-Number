@@ -3,8 +3,8 @@
 big_number big_number::operator+(big_number other) {
     std::pair<big_number, big_number> terms = {*this, other};
     big_number sum;
-    big_number::equalize_sizes(terms.first, terms.second);
 
+    big_number::equalize_sizes(terms.first, terms.second);
     terms.first.data.push_front(0);
     terms.first.data.push_front(0);
     terms.first.integer_part_size += 2;
@@ -37,6 +37,7 @@ big_number big_number::operator+(big_number other) {
             int res = sum.data.get(i) xor carry;
             carry = (sum.data.get(i) and carry);
             sum.data.set(i, res);
+            if (carry == 0) break;
         }
         sum.negative = true;
     }

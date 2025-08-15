@@ -1,0 +1,11 @@
+add_executable(
+    BigNumber 
+    main.cpp 
+    bit_deque.cpp
+    big_number/big_number.cpp
+    big_number/assignment_operators.cpp
+    big_number/binary_arithmetic_operators.cpp
+    big_number/unary_arithmetic_operators.cpp
+    big_number/relational_operators.cpp
+    big_number/bitwise_operators.cpp
+)
