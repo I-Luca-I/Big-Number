@@ -99,3 +99,17 @@ TEST_CASE("a big_number can be resized") {
         REQUIRE(b1.size() == b2.size());
     }
 }
+
+TEST_CASE("you can limit the size of a big_number's fractional part") {
+    big_number b = big_number::binary("1011.1011");
+    REQUIRE(b.to_binary_string() == "1011.1011");
+
+    b.set_binary_significand_precision(2);
+    REQUIRE(b.to_binary_string() == "1011.10");
+
+    b.set_binary_significand_precision(0);
+    REQUIRE(b.to_binary_string() == "1011");
+
+    b.set_binary_significand_precision(4);
+    REQUIRE(b.to_binary_string() == "1011.1011");
+}

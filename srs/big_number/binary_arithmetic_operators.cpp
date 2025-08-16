@@ -1,6 +1,7 @@
+#include <stdexcept>
 #include "../../include/big_number.h"
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 big_number big_number::operator+(big_number other) {
     std::pair<big_number, big_number> terms = {*this, other};
     big_number sum;
@@ -46,12 +47,12 @@ big_number big_number::operator+(big_number other) {
     return sum;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 big_number big_number::operator-(big_number other) {
     return *this + (-other);
 }
 
-// Complexity: Exponential in size()
+// Complexity: Exponential in this->size() + other.size()
 big_number big_number::operator*(big_number other) {
     std::pair<big_number, big_number> terms = {*this, other};
     big_number product = big_number::binary("0");
@@ -81,4 +82,51 @@ big_number big_number::operator*(big_number other) {
     product.fractional_part_size = terms.first.fractional_part_size + terms.second.fractional_part_size;
 
     return product;
+}
+
+// Complexity: Exponential in quotient.size()
+big_number big_number::operator/(big_number other) {
+    big_number dividend = *this;
+    big_number divisor = other;
+    big_number quotient = big_number::binary("0");
+
+    if (divisor == big_number::binary("0")) throw std::domain_error("can't divide by 0");
+
+    dividend.shrink_to_fit();
+    divisor.shrink_to_fit();
+    big_number::equalize_sizes(dividend, divisor);
+
+    dividend.integer_part_size += dividend.fractional_part_size;
+    divisor.integer_part_size += divisor.fractional_part_size;
+    dividend.fractional_part_size = 0;
+    divisor.fractional_part_size = 0;
+
+    quotient.negative = dividend.negative xor divisor.negative;
+    dividend.negative = false;
+    divisor.negative = false;
+
+    quotient.set_binary_significand_precision(std::min(dividend.get_binary_significand_precision(), divisor.get_binary_significand_precision()));
+
+    int shifts = 0;
+    while (divisor.data.get(0) == 0) {
+        divisor = divisor << 1;
+        divisor.data.pop_front();
+        divisor.integer_part_size--;
+        shifts++;
+    }
+
+    while (dividend != big_number::binary("0") and quotient.fractional_part_size < quotient.get_binary_significand_precision()) {
+        quotient.data.push_back(divisor <= dividend);
+        if (shifts >= 0) quotient.integer_part_size++;
+        else quotient.fractional_part_size++;
+
+        if (divisor <= dividend) {
+            dividend -= divisor;
+        }
+
+        divisor = divisor >> 1;
+        shifts--;
+    }
+
+    return quotient;
 }

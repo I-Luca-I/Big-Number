@@ -20,4 +20,10 @@ TEST_CASE("big_number supports some assignment operations") {
 
     b *= big_number::binary("101.11"); b.shrink_to_fit();
     REQUIRE(b.to_binary_string() == "-11100.11");
+
+    b /= big_number::binary("1"); b.shrink_to_fit();
+    REQUIRE(b.to_binary_string() == "-11100.11");
+
+    b /= big_number::binary("-1010"); b.shrink_to_fit();
+    REQUIRE(b.to_binary_string() == "10.111");
 }

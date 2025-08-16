@@ -47,4 +47,14 @@ TEST_CASE("big_number - arithmetic operators") {
             return b * b;
         };
     }
+
+    big_number b1 = big_number::binary("1");
+    big_number b2 = big_number::binary("11");
+    for (int i=4; i<=64; i*=4) {
+        b1.set_binary_significand_precision(i*8);
+        b2.set_binary_significand_precision(i*8);
+        BENCHMARK("division - truncating " + std::to_string(i) + " bytes") {
+            return b1 / b2;
+        };
+    }
 }

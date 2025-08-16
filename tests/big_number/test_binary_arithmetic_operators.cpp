@@ -78,3 +78,32 @@ TEST_CASE("two big_numbers can be multiplied") {
     product = big_number::binary("10011.0101") * big_number::binary("11.01"); product.shrink_to_fit();
     REQUIRE(product.to_binary_string() == "111110.110001");
 }
+
+TEST_CASE("two big_numbers can be divided") {
+    big_number quotient = big_number::binary("1") / big_number::binary("1"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "1");
+
+    quotient = big_number::binary("101.101") / big_number::binary("-101.101"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "-1");
+
+    quotient = big_number::binary("0") / big_number::binary("1"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "0");
+
+    quotient = big_number::binary("0") / big_number::binary("101.101"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "0");
+
+    quotient = big_number::binary("1111") / big_number::binary("101"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "11");
+
+    quotient = big_number::binary("1111") / big_number::binary("10"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "111.1");
+
+    quotient = big_number::binary("1101") / big_number::binary("11"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "100.0101010101010101010101010101010101");
+
+    quotient = big_number::binary("101") / big_number::binary("1111"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "0.0101010101010101010101010101010101");
+
+    quotient = big_number::binary("1001110101101.001101011100001010001111010111000010100011110101110000101000") / big_number::binary("1100110111.000110011001100110011001100110011001100110011001100110011001"); quotient.shrink_to_fit();
+    REQUIRE(quotient.to_binary_string() == "110.0001111010101011011010111110000101");
+}

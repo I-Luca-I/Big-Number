@@ -1,6 +1,6 @@
 #include "../../include/big_number.h"
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 bool big_number::operator>(big_number other) {
     std::pair<big_number, big_number> terms = {*this, other};
     if (terms.first == terms.second) return false;
@@ -13,12 +13,12 @@ bool big_number::operator>(big_number other) {
     return false;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 bool big_number::operator<(big_number other) {
     return other > *this;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 bool big_number::operator==(big_number other) {
     std::pair<big_number, big_number> terms = {*this, other};
     terms.first.shrink_to_fit();
@@ -34,17 +34,17 @@ bool big_number::operator==(big_number other) {
     return true;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 bool big_number::operator!=(big_number other) {
     return !(*this == other);
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 bool big_number::operator>=(big_number other) {
     return *this > other or *this == other;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in max(this->size(), other.size())
 bool big_number::operator<=(big_number other) {
     return *this < other or *this == other;
 }

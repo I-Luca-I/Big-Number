@@ -12,26 +12,26 @@ big_number big_number::operator-() {
     return b;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number& big_number::operator++() {
     *this += big_number::binary("1");
     return *this;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number& big_number::operator--() {
     *this -= big_number::binary("1");
     return *this;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number big_number::operator++(int) {
     big_number b = *this;
     *this += big_number::binary("1");
     return b;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number big_number::operator--(int) {
     big_number b = *this;
     *this -= big_number::binary("1");

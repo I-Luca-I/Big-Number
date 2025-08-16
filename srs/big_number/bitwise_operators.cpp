@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "../../include/big_number.h"
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number big_number::operator&(big_number other) {
     big_number::equalize_sizes(*this, other);
     big_number b;
@@ -14,7 +14,7 @@ big_number big_number::operator&(big_number other) {
     return b;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number big_number::operator|(big_number other) {
     big_number::equalize_sizes(*this, other);
     big_number b;
@@ -27,7 +27,7 @@ big_number big_number::operator|(big_number other) {
     return b;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number big_number::operator^(big_number other) {
     big_number::equalize_sizes(*this, other);
     big_number b;
@@ -40,7 +40,7 @@ big_number big_number::operator^(big_number other) {
     return b;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in this->size()
 big_number big_number::operator~() {
     big_number b;
     b.integer_part_size = this->integer_part_size;
