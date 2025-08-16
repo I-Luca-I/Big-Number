@@ -52,40 +52,22 @@ big_number big_number::operator~() {
     return b;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in shift_count
 big_number big_number::operator<<(unsigned int shift_count) {
     big_number b = *this;
     b.integer_part_size += shift_count;
-
     for (int i=0; i<shift_count; i++) {
-        b.data.push_front(0);
-    }
-
-    for (int i=0; i<b.size()-shift_count; i++) {
-        b.data.set(i, b.data.get(i+shift_count));
-    }
-
-    for (int i=b.size()-shift_count; i<b.size(); i++) {
-        b.data.set(i, 0);
+        b.data.push_back(0);
     }
     return b;
 }
 
-// Complexity: Linear in size()
+// Complexity: Linear in shift_count
 big_number big_number::operator>>(unsigned int shift_count) {
     big_number b = *this;
     b.fractional_part_size += shift_count;
-
     for (int i=0; i<shift_count; i++) {
-        b.data.push_back(0);
-    }
-
-    for (int i=b.size()-1; i>=shift_count; i--) {
-        b.data.set(i, b.data.get(i-shift_count));
-    }
-
-    for (int i=shift_count-1; i>=0; i--) {
-        b.data.set(i, 0);
+        b.data.push_front(0);
     }
     return b;
 }

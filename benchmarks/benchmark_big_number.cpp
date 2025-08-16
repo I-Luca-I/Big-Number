@@ -37,4 +37,14 @@ TEST_CASE("big_number - arithmetic operators") {
             return b + b;
         };
     }
+
+    b = big_number::binary("0");
+    bytes = "11111111";
+    for (int i=4; i<=64; i*=4) {
+        bytes = bytes + bytes + bytes + bytes;
+        b = big_number::binary(bytes);
+        BENCHMARK("multiplication - " + std::to_string(i) + " bytes") {
+            return b * b;
+        };
+    }
 }
