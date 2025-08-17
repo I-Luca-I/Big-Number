@@ -23,3 +23,9 @@ big_number& big_number::operator/=(big_number other) {
     *this = *this / other;
     return *this;
 }
+
+// Complexity: Exponential in quotient.size() + divisor.size()
+big_number& big_number::operator%=(big_number other) {
+    *this = *this % other;
+    return *this;
+}

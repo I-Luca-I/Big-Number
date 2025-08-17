@@ -115,7 +115,7 @@ big_number big_number::operator/(big_number other) {
         shifts++;
     }
 
-    while (dividend != big_number::binary("0") and quotient.fractional_part_size < quotient.get_binary_significand_precision()) {
+    while ((dividend != big_number::binary("0") or shifts >= 0) and quotient.fractional_part_size <= quotient.get_binary_significand_precision()) {
         quotient.data.push_back(divisor <= dividend);
         if (shifts >= 0) quotient.integer_part_size++;
         else quotient.fractional_part_size++;
@@ -128,5 +128,31 @@ big_number big_number::operator/(big_number other) {
         shifts--;
     }
 
+    while (quotient.fractional_part_size > quotient.get_binary_significand_precision()) {
+        quotient.data.pop_back();
+        quotient.fractional_part_size--;
+    }
+    
     return quotient;
+}
+
+// Complexity: Exponential in quotient.size() + divisor.size()
+big_number big_number::operator%(big_number other) {
+    big_number dividend = *this;
+    big_number divisor = other;
+    big_number remainder;
+
+    if (divisor == big_number::binary("0")) throw std::domain_error("can't modulo by 0");
+    if (divisor.fractional_part_size > 0 or dividend.fractional_part_size > 0) throw std::domain_error("can't modulo decimal numbers");
+
+    divisor.negative = dividend.negative;;
+
+    dividend.set_binary_significand_precision(0);
+    divisor.set_binary_significand_precision(0);
+
+    // remainder = dividend - (divisor * (dividend / divisor));
+    big_number a = dividend/divisor;
+    big_number b = divisor * a;
+    remainder = dividend - b;
+    return remainder;
 }
