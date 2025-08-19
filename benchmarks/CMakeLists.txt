@@ -15,6 +15,7 @@ add_executable(
     ../srs/big_number/unary_arithmetic_operators.cpp
     ../srs/big_number/relational_operators.cpp
     ../srs/big_number/bitwise_operators.cpp
+    ../srs/big_number/rounding_functions.cpp
 
     benchmark_bit_deque.cpp
     benchmark_big_number.cpp

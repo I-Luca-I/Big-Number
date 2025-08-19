@@ -63,4 +63,10 @@ public:
     big_number operator~();
     big_number operator<<(unsigned int shift_count);
     big_number operator>>(unsigned int shift_count);
+
+    // Rounding Functions
+    static big_number ceil(big_number x);
+    static big_number floor(big_number x);
+    static big_number trunc(big_number x);
+    static big_number round(big_number x);
 };

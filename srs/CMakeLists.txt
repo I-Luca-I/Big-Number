@@ -8,4 +8,5 @@ add_executable(
     big_number/unary_arithmetic_operators.cpp
     big_number/relational_operators.cpp
     big_number/bitwise_operators.cpp
+    big_number/rounding_functions.cpp
 )

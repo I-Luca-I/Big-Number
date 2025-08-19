@@ -15,6 +15,7 @@ add_executable(
     ../srs/big_number/unary_arithmetic_operators.cpp
     ../srs/big_number/relational_operators.cpp
     ../srs/big_number/bitwise_operators.cpp
+    ../srs/big_number/rounding_functions.cpp
 
     test_bit_deque.cpp 
     big_number/test_big_number.cpp
@@ -23,6 +24,8 @@ add_executable(
     big_number/test_unary_arithmetic_operators.cpp
     big_number/test_relational_operators.cpp
     big_number/test_bitwise_operators.cpp
+    big_number/test_rounding_functions.cpp
+
 )
 
 target_link_libraries(BigNumberTests PRIVATE Catch2::Catch2WithMain)
