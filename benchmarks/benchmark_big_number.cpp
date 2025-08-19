@@ -21,6 +21,23 @@ TEST_CASE("big_number - input and output") {
             return b.to_binary_string();
         };
     }
+
+    bytes = "9";
+    for (int i=4; i<=64; i*=4) {
+        bytes = bytes + bytes + bytes + bytes;
+        BENCHMARK("decimal initialization - " + std::to_string(i) + " digits") {
+            return b = big_number::decimal(bytes);
+        };
+    }
+
+    bytes = "9";
+    for (int i=4; i<=64; i*=4) {
+        bytes = bytes + bytes + bytes + bytes;
+        b = big_number::decimal(bytes);
+        BENCHMARK("decimal to_string - " + std::to_string(i) + " digits") {
+            return b.to_decimal_string();
+        };
+    }
 }
 
 TEST_CASE("big_number - arithmetic operators") {
@@ -53,7 +70,7 @@ TEST_CASE("big_number - arithmetic operators") {
     for (int i=4; i<=64; i*=4) {
         b1.set_binary_significand_precision(i*8);
         b2.set_binary_significand_precision(i*8);
-        BENCHMARK("division - truncating " + std::to_string(i) + " bytes") {
+        BENCHMARK("division - truncating after " + std::to_string(i) + " bytes") {
             return b1 / b2;
         };
     }

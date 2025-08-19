@@ -12,7 +12,7 @@ private:
     
     big_number();
 public:
-    static big_number decimal(std::string number);
+    static big_number decimal(std::string number, int significand_precision=33);
     static big_number binary(std::string number);
     int size();
     void resize_integer(unsigned int new_size);

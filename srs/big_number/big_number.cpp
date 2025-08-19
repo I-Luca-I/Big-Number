@@ -12,7 +12,54 @@ big_number::big_number() {
     this->set_decimal_significand_precision(10);
 }
 
-// big_number big_number::decimal(std::string number) {}
+// Complexity: Exponensial in number.length()
+// A slight loss of precision can be expected
+big_number big_number::decimal(std::string number, int significand_precision) {
+    std::string to_binary[] = {"0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001"};
+    big_number b = big_number::binary("0");
+
+    bool negative = false;
+    bool fraction = false;
+    int decimal_integer_part_size = 0;
+    int decimal_fractional_part_size = 0;
+
+    if (number[0] == '-') {
+        number.erase(0, 1);
+        negative = true;
+    }
+
+    for (int i=0; i<number.length(); i++) {
+        if (!((number[i] >= '0' and number[i] <= '9') or (number[i] == '.' and !fraction))) throw std::invalid_argument("the decimal number \"" + number + "\" is malformed");
+        
+        if (number[i] == '.') fraction = true;
+        else if (fraction) decimal_fractional_part_size++;
+        else decimal_integer_part_size++;
+    }
+
+    // Translate integer part
+    big_number magnitude = big_number::binary("1");
+    for (int i=decimal_integer_part_size-1; i>=0; i--) {
+        big_number value = big_number::binary(to_binary[number[i]-'0']);
+        b += value * magnitude;
+        magnitude *= big_number::binary("1010");
+    }
+
+    // Translate fractional part
+    magnitude = big_number::binary("1");
+    big_number fractional_part = big_number::binary("0");
+    for (int i=number.length()-1; i>decimal_integer_part_size; i--) {
+        big_number value = big_number::binary(to_binary[number[i]-'0']);
+        fractional_part += value * magnitude;
+        magnitude *= big_number::binary("1010");
+    }
+    fractional_part.set_binary_significand_precision(significand_precision);
+    magnitude.set_binary_significand_precision(significand_precision);
+    b.set_binary_significand_precision(significand_precision);
+    b += fractional_part / magnitude;
+    b.negative = negative;
+
+    return b;
+}
 
 // Complexity: Linear in number.length()
 big_number big_number::binary(std::string number) {
@@ -108,7 +155,75 @@ void big_number::set_binary_significand_precision(unsigned int digits) {
     this->binary_significand_precision = digits;
 }
 
-// std::string big_number::to_decimal_string() {}
+// Complexity: Exponensial in this->length()
+std::string big_number::to_decimal_string() {
+    big_number b = *this;
+
+    std::string s;
+    s = (this->negative) ? "-" : "";
+
+    big_number integer_part = *this;
+    big_number fractional_part = *this;
+
+    while (integer_part.fractional_part_size > 0) {
+        integer_part.data.pop_back();
+        integer_part.fractional_part_size--;
+    }
+
+    while (fractional_part.integer_part_size > 0) {
+        fractional_part.data.pop_front();
+        fractional_part.integer_part_size--;
+    }
+    fractional_part.data.push_front(0);
+    fractional_part.integer_part_size++;
+
+    // Translate integer part
+    std::string integer_string = "";
+    integer_part.set_binary_significand_precision(0);
+    while (integer_part != big_number::binary("0")) {
+        std::string binary_remainder = (integer_part % big_number::binary("1010")).to_binary_string();
+        int decimal_remainder = 0;
+
+        for (int i=binary_remainder.length()-1; i>=0; i--) {
+            if (binary_remainder[i] == '-') continue;
+            decimal_remainder += (binary_remainder[i]-'0') << (binary_remainder.length() - 1 - i);
+        }
+        
+        integer_string += decimal_remainder + '0';
+        integer_part /= big_number::binary("1010");
+    }
+    if (integer_string.empty()) integer_string += '0';
+
+    for (int i=integer_string.length()-1; i>=0; i--) {
+        s += integer_string[i];
+    }
+
+    if (fractional_part != big_number::binary("0")) s += '.';
+
+    // Translate fractional part
+    while (fractional_part != big_number::binary("0")) {
+        fractional_part *= big_number::binary("1010");
+
+        std::string binary_remainder = fractional_part.to_binary_string();
+        if (binary_remainder[0] == '-') binary_remainder.erase(0, 1);
+        int decimal_remainder = 0;
+
+        for (int i=fractional_part.integer_part_size-1; i>=0; i--) {
+            decimal_remainder += (binary_remainder[i]-'0') << (fractional_part.integer_part_size - 1 - i);
+        }
+
+        while (fractional_part.integer_part_size > 0) {
+            fractional_part.data.pop_front();
+            fractional_part.integer_part_size--;
+        }
+        fractional_part.data.push_front(0);
+        fractional_part.integer_part_size++;
+        
+        s += decimal_remainder + '0';
+    }
+
+    return s;
+}
 
 // Complexity: Linear in this.size()
 std::string big_number::to_binary_string() {

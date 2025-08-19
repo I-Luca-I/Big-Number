@@ -23,7 +23,7 @@ TEST_CASE("bit_deque - input and output") {
     }
 }
 
-TEST_CASE("bit_deque - get and set") {
+TEST_CASE("bit_deque - bits manipulation") {
     bit_deque b = bit_deque("10011001");
     BENCHMARK("get") {
         return b.get(0);
@@ -32,10 +32,8 @@ TEST_CASE("bit_deque - get and set") {
     BENCHMARK("set") {
         return b.set(0, 1);
     };
-}
 
-TEST_CASE("bit_deque - push and pop") {
-    bit_deque b = bit_deque("1111111111111111111111111111111111111111111111111111111111111111");
+    b = bit_deque("1111111111111111111111111111111111111111111111111111111111111111");
     BENCHMARK("push front - 1 bit") {
         return b.push_front(0);
     };
